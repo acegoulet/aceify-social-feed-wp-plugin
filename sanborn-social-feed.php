@@ -38,9 +38,9 @@ function sanborn_social_feed_widget_control($args=array(), $params=array()) {
 		update_option('sanborn_social_feed_widget_twitter_oauth_token', $_POST['tw_oauth_token']);
 		update_option('sanborn_social_feed_widget_twitter_oauth_secret', $_POST['tw_oauth_secret']);
 		//instagram options
-		update_option('sanborn_social_feed_widget_instagram_handle', $_POST['insta_handle']);
 		update_option('sanborn_social_feed_widget_insta_client_id', $_POST['insta_client_id']);
-		update_option('sanborn_social_feed_widget_insta_client_secret', $_POST['insta_client_secret']);
+		update_option('sanborn_social_feed_widget_insta_access_token', $_POST['insta_access_token']);
+		update_option('sanborn_social_feed_widget_insta_redirect_uri', $_POST['insta_redirect_uri']);
 	}
 
 	//load options
@@ -53,9 +53,10 @@ function sanborn_social_feed_widget_control($args=array(), $params=array()) {
 	$tw_oauth_token = get_option('sanborn_social_feed_widget_twitter_oauth_token');
 	$tw_oauth_secret = get_option('sanborn_social_feed_widget_twitter_oauth_secret');
 	//instagram options
-	$insta_handle = get_option('sanborn_social_feed_widget_instagram_handle');
 	$insta_client_id = get_option('sanborn_social_feed_widget_insta_client_id');
-	$insta_client_secret = get_option('sanborn_social_feed_widget_insta_client_secret');
+	$insta_access_token = get_option('sanborn_social_feed_widget_insta_access_token');
+	$insta_redirect_uri = get_option('sanborn_social_feed_widget_insta_redirect_uri');
+	
 	?>
 	<h3>Twitter</h3>
 	<label for="tw_handle">Twitter handle:</label><br />
@@ -75,14 +76,19 @@ function sanborn_social_feed_widget_control($args=array(), $params=array()) {
 	<br /><br />
 	<hr />
 	<h3>Instagram</h3>
-	<label for="insta_handle">Instagram handle:</label><br />
-	<input type="text" class="widefat" name="insta_handle" id="insta_handle" value="<?php echo stripslashes($insta_handle); ?>" />
-	<br /><br />
-	<label for="tw_oauth_token">Instagram App Client ID:</label><br />
+	<label for="insta_client_id">Instagram App Client ID:</label><br />
 	<input type="text" class="widefat" name="insta_client_id" id="insta_client_id" value="<?php echo stripslashes($insta_client_id); ?>" />
 	<br /><br />
-	<label for="tw_oauth_secret">Instagram App Client Secret:</label><br />
-	<input type="text" class="widefat" name="insta_client_secret" id="insta_client_secret" value="<?php echo stripslashes($insta_client_secret); ?>" />
+	<label for="insta_redirect_uri">Instagram App Redirect URI:</label><br />
+	<input type="text" class="widefat" name="insta_redirect_uri" id="insta_redirect_uri" value="<?php echo stripslashes($insta_redirect_uri); ?>" />
+	<br /><br />
+	<label for="insta_access_token">Instagram Access Token:</label><br />
+	<input type="text" class="widefat" name="insta_access_token" id="insta_access_token" value="<?php echo stripslashes($insta_access_token); ?>" />
+	<?php if(!empty($insta_redirect_uri) && !empty($insta_client_id)){ ?>
+	    <br /><br />Get it <a href="https://api.instagram.com/oauth/authorize/?client_id=<?php echo stripslashes($insta_client_id); ?>&redirect_uri=<?php echo stripslashes($insta_redirect_uri); ?>&response_type=token" target="_blank">here</a>. You will be authorizing the app to access posts associated with your Instagram account. After authorizing the app, you will see the access token in the browser url.
+	<?php } else { ?>
+    	<br /><br />Input Client ID and Redirect URI and save widget settings to get a link for generating the access token.
+	<?php } ?>
 	<br /><br />
 	<hr />
 	<br />
@@ -108,9 +114,9 @@ function sanborn_social_feed_widget_display($args=array(), $params=array()) {
 	$tw_oauth_token = get_option('sanborn_social_feed_widget_twitter_oauth_token');
 	$tw_oauth_secret = get_option('sanborn_social_feed_widget_twitter_oauth_secret');
 	//instagram options
-	$insta_handle = get_option('sanborn_social_feed_widget_instagram_handle');
 	$insta_client_id = get_option('sanborn_social_feed_widget_insta_client_id');
-	$insta_client_secret = get_option('sanborn_social_feed_widget_insta_client_secret');
+	$insta_access_token = get_option('sanborn_social_feed_widget_insta_access_token');
+	$insta_redirect_uri = get_option('sanborn_social_feed_widget_insta_redirect_uri');
 
 	//widget output
 	wp_enqueue_script('sanborn-social-feed', plugins_url( 'sanborn-social-feed.js', __FILE__ ), 'jquery', '1', true);
@@ -119,7 +125,7 @@ function sanborn_social_feed_widget_display($args=array(), $params=array()) {
 	if(!empty($tw_handle) && !empty($tw_consumer_key) && !empty($tw_consumer_secret) && !empty($tw_oauth_token) && !empty($tw_oauth_secret)){
     	$use_twitter = true;
 	}
-	if(!empty($insta_handle) && !empty($insta_client_id) && !empty($insta_client_secret)){
+	if(!empty($insta_client_id) && !empty($insta_access_token) && !empty($insta_redirect_uri)){
     	$use_insta = true;
 	}
 	?>
