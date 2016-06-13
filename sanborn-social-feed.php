@@ -4,12 +4,12 @@ Plugin Name: Sanborn Social Feed
 Plugin URI: http://www.sanbornmediafactory.com
 Description: Plugin to create a social feed of twitter and instagram posts from user accounts
 Author: Ace Goulet
-Version: 1.0
+Version: 1.1
 Author URI: http://acegoulet.com
 */
 
 // Define current version constant
-define( 'sanborn_sf_version', '1.0' );
+define( 'sanborn_sf_version', '1.1' );
 
 //Twitter widget - include this file in your theme functions or copy the code directly in there.
 
