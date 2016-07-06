@@ -15,6 +15,21 @@ $(document).ready(function(){
     	instagram_feed(social_endpoint, use_insta, post_count, social_feed, twitter_feed_array, instagram_feed_array);
 	}
 	
+	function parseTwitterDate(tdate) {
+        var system_date = Date.parse(tdate);
+        if (K.ie) {
+            system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))
+        }
+        return system_date;
+    }
+    
+    var K = function () {
+        var a = navigator.userAgent;
+        return {
+            ie: a.match(/MSIE\s([^;]*)/)
+        }
+    }();
+	
 	function twitter_feed(social_endpoint, use_insta, post_count, social_feed, twitter_feed_array, instagram_feed_array){
     	$.ajax({
     		url: social_endpoint+'/twitter.php',
@@ -22,7 +37,10 @@ $(document).ready(function(){
     		dataType: 'json',
     		success: function(data) {
         		for (var i = 0; i < data.length; i++) {
-            		var tw_date = Date.parse(data[i].created_at);
+            		//var tw_date = Date.parse(data[i].created_at);
+            		var tw_date = parseTwitterDate(data[i].created_at);
+            		//tw_date = data[i].created_at;
+            		//console.log(tw_date);
             		var tw_media = 'no_image';
             		if(typeof data[i].entities.media != 'undefined' && typeof data[i].entities.media[0] != 'undefined' && typeof data[i].entities.media[0].media_url_https != 'undefined'){
                 		tw_media = data[i].entities.media[0].media_url_https;
@@ -85,6 +103,7 @@ $(document).ready(function(){
     	}
     	    	
     	if($('#social-feed-list').length) {
+        	//console.log(social_feed);
         	for (var i = offset; i < loop_end; i++) {
             	if(typeof social_feed[i] != 'undefined'){
                 	var social_type = 'text';
@@ -103,6 +122,7 @@ $(document).ready(function(){
                 	        } else if(social_feed[i][0] == 'instagram'){
                     	        social_item_output += 'Grammed on ';
                 	        }
+                	        //console.log(social_feed[i][1]);
                 	        var social_item_date = new Date(parseInt(social_feed[i][1]));
                 	        social_item_output += (social_item_date.getMonth()+1)+"/"+social_item_date.getDate()+"/"+social_item_date.getFullYear();
                 	    social_item_output += '</div>';
