@@ -17,7 +17,8 @@ $(document).ready(function(){
 	
 	function parseTwitterDate(tdate) {
         var system_date = Date.parse(tdate);
-        if (K.ie) {
+        if (K == true) {
+            //console.log('ie');
             system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))
         }
         return system_date;
@@ -25,9 +26,18 @@ $(document).ready(function(){
     
     var K = function () {
         var a = navigator.userAgent;
-        return {
-            ie: a.match(/MSIE\s([^;]*)/)
+        //console.log(a);
+        if(navigator.userAgent.indexOf('MSIE')!==-1 || navigator.userAgent.indexOf('Edge')!==-1 || navigator.appVersion.indexOf('Trident/') > 0){
+            return true;
         }
+        else {
+            return false;
+        }
+/*
+        return {
+            ie: a.match(/MSIE\s([^;]*)/);
+        }
+*/
     }();
 	
 	function twitter_feed(social_endpoint, use_insta, post_count, social_feed, twitter_feed_array, instagram_feed_array){
