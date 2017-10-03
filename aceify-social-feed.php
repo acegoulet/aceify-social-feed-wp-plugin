@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Sanborn Social Feed
-Plugin URI: http://www.sanbornmediafactory.com
+Plugin Name: Aceify Social Feed
+Plugin URI: https://www.acegoulet.com
 Description: Plugin to create a social feed of twitter and instagram posts from user accounts
 Author: Ace Goulet
 Version: 1.3
@@ -9,53 +9,53 @@ Author URI: http://acegoulet.com
 */
 
 // Define current version constant
-define( 'sanborn_sf_version', '1.3' );
+define( 'aceify_sf_version', '1.3' );
 
 //Twitter widget - include this file in your theme functions or copy the code directly in there.
 
 wp_register_sidebar_widget(
-    'sanborn_social_feed_widget',          	// your unique widget id
-    'Sanborn Social Feed',        // widget name
-    'sanborn_social_feed_widget_display',  // callback function to display widget
+    'aceify_social_feed_widget',          	// your unique widget id
+    'Aceify Social Feed',        // widget name
+    'aceify_social_feed_widget_display',  // callback function to display widget
     array(                                 // options
         'description' => 'Social feed generated from Twitter and Instagram posts.'
     )
 );
 wp_register_widget_control(
-	'sanborn_social_feed_widget',		// id
-	'sanborn_social_feed_widget',		// name
-	'sanborn_social_feed_widget_control'	// callback function
+	'aceify_social_feed_widget',		// id
+	'aceify_social_feed_widget',		// name
+	'aceify_social_feed_widget_control'	// callback function
 );
-function sanborn_social_feed_widget_control($args=array(), $params=array()) {
+function aceify_social_feed_widget_control($args=array(), $params=array()) {
 	//the form is submitted, save into database
 	if (isset($_POST['submitted'])) {
-		update_option('sanborn_social_feed_widget_postnum', $_POST['postnum']);
-		update_option('sanborn_social_feed_widget_hide_load_more', $_POST['dont_include_load_more']);
+		update_option('aceify_social_feed_widget_postnum', $_POST['postnum']);
+		update_option('aceify_social_feed_widget_hide_load_more', $_POST['dont_include_load_more']);
 		//twitter options
-		update_option('sanborn_social_feed_widget_handle', $_POST['tw_handle']);
-		update_option('sanborn_social_feed_widget_twitter_consumer_key', $_POST['tw_consumer_key']);
-		update_option('sanborn_social_feed_widget_twitter_consumer_secret', $_POST['tw_consumer_secret']);
-		update_option('sanborn_social_feed_widget_twitter_oauth_token', $_POST['tw_oauth_token']);
-		update_option('sanborn_social_feed_widget_twitter_oauth_secret', $_POST['tw_oauth_secret']);
+		update_option('aceify_social_feed_widget_handle', $_POST['tw_handle']);
+		update_option('aceify_social_feed_widget_twitter_consumer_key', $_POST['tw_consumer_key']);
+		update_option('aceify_social_feed_widget_twitter_consumer_secret', $_POST['tw_consumer_secret']);
+		update_option('aceify_social_feed_widget_twitter_oauth_token', $_POST['tw_oauth_token']);
+		update_option('aceify_social_feed_widget_twitter_oauth_secret', $_POST['tw_oauth_secret']);
 		//instagram options
-		update_option('sanborn_social_feed_widget_insta_client_id', $_POST['insta_client_id']);
-		update_option('sanborn_social_feed_widget_insta_access_token', $_POST['insta_access_token']);
-		update_option('sanborn_social_feed_widget_insta_redirect_uri', $_POST['insta_redirect_uri']);
+		update_option('aceify_social_feed_widget_insta_client_id', $_POST['insta_client_id']);
+		update_option('aceify_social_feed_widget_insta_access_token', $_POST['insta_access_token']);
+		update_option('aceify_social_feed_widget_insta_redirect_uri', $_POST['insta_redirect_uri']);
 	}
 
 	//load options
-	$postnum = get_option('sanborn_social_feed_widget_postnum');
-	$dont_include_load_more = get_option('sanborn_social_feed_widget_hide_load_more');
+	$postnum = get_option('aceify_social_feed_widget_postnum');
+	$dont_include_load_more = get_option('aceify_social_feed_widget_hide_load_more');
 	//twitter options
-	$tw_handle = get_option('sanborn_social_feed_widget_handle');
-	$tw_consumer_key = get_option('sanborn_social_feed_widget_twitter_consumer_key');
-	$tw_consumer_secret = get_option('sanborn_social_feed_widget_twitter_consumer_secret');
-	$tw_oauth_token = get_option('sanborn_social_feed_widget_twitter_oauth_token');
-	$tw_oauth_secret = get_option('sanborn_social_feed_widget_twitter_oauth_secret');
+	$tw_handle = get_option('aceify_social_feed_widget_handle');
+	$tw_consumer_key = get_option('aceify_social_feed_widget_twitter_consumer_key');
+	$tw_consumer_secret = get_option('aceify_social_feed_widget_twitter_consumer_secret');
+	$tw_oauth_token = get_option('aceify_social_feed_widget_twitter_oauth_token');
+	$tw_oauth_secret = get_option('aceify_social_feed_widget_twitter_oauth_secret');
 	//instagram options
-	$insta_client_id = get_option('sanborn_social_feed_widget_insta_client_id');
-	$insta_access_token = get_option('sanborn_social_feed_widget_insta_access_token');
-	$insta_redirect_uri = get_option('sanborn_social_feed_widget_insta_redirect_uri');
+	$insta_client_id = get_option('aceify_social_feed_widget_insta_client_id');
+	$insta_access_token = get_option('aceify_social_feed_widget_insta_access_token');
+	$insta_redirect_uri = get_option('aceify_social_feed_widget_insta_redirect_uri');
 	
 	?>
 	<h3>Twitter</h3>
@@ -103,23 +103,23 @@ function sanborn_social_feed_widget_control($args=array(), $params=array()) {
 	<input type="hidden" name="submitted" value="1" />
 	<?php
 }
-function sanborn_social_feed_widget_display($args=array(), $params=array()) {
+function aceify_social_feed_widget_display($args=array(), $params=array()) {
 	//load options
-	$postnum = get_option('sanborn_social_feed_widget_postnum');
-	$dont_include_load_more = get_option('sanborn_social_feed_widget_hide_load_more');
+	$postnum = get_option('aceify_social_feed_widget_postnum');
+	$dont_include_load_more = get_option('aceify_social_feed_widget_hide_load_more');
 	//twitter options
-	$tw_handle = get_option('sanborn_social_feed_widget_handle');
-	$tw_consumer_key = get_option('sanborn_social_feed_widget_twitter_consumer_key');
-	$tw_consumer_secret = get_option('sanborn_social_feed_widget_twitter_consumer_secret');
-	$tw_oauth_token = get_option('sanborn_social_feed_widget_twitter_oauth_token');
-	$tw_oauth_secret = get_option('sanborn_social_feed_widget_twitter_oauth_secret');
+	$tw_handle = get_option('aceify_social_feed_widget_handle');
+	$tw_consumer_key = get_option('aceify_social_feed_widget_twitter_consumer_key');
+	$tw_consumer_secret = get_option('aceify_social_feed_widget_twitter_consumer_secret');
+	$tw_oauth_token = get_option('aceify_social_feed_widget_twitter_oauth_token');
+	$tw_oauth_secret = get_option('aceify_social_feed_widget_twitter_oauth_secret');
 	//instagram options
-	$insta_client_id = get_option('sanborn_social_feed_widget_insta_client_id');
-	$insta_access_token = get_option('sanborn_social_feed_widget_insta_access_token');
-	$insta_redirect_uri = get_option('sanborn_social_feed_widget_insta_redirect_uri');
+	$insta_client_id = get_option('aceify_social_feed_widget_insta_client_id');
+	$insta_access_token = get_option('aceify_social_feed_widget_insta_access_token');
+	$insta_redirect_uri = get_option('aceify_social_feed_widget_insta_redirect_uri');
 
 	//widget output
-	wp_enqueue_script('sanborn-social-feed', plugins_url( 'sanborn-social-feed.js', __FILE__ ), 'jquery', '1', true);
+	wp_enqueue_script('aceify-social-feed', plugins_url( 'aceify-social-feed.js', __FILE__ ), 'jquery', '1', true);
 	$use_twitter = false;
 	$use_insta = false;
 	if(!empty($tw_handle) && !empty($tw_consumer_key) && !empty($tw_consumer_secret) && !empty($tw_oauth_token) && !empty($tw_oauth_secret)){

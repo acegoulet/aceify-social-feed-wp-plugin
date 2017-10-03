@@ -7,11 +7,11 @@ header('Content-type: application/json');
 require_once 'twitteroauth/twitteroauth.php';
 
 //get variables from wordpress options
-$tw_handle = get_option('sanborn_social_feed_widget_handle');
-$tw_consumer_key = get_option('sanborn_social_feed_widget_twitter_consumer_key');
-$tw_consumer_secret = get_option('sanborn_social_feed_widget_twitter_consumer_secret');
-$tw_oauth_token = get_option('sanborn_social_feed_widget_twitter_oauth_token');
-$tw_oauth_secret = get_option('sanborn_social_feed_widget_twitter_oauth_secret');
+$tw_handle = get_option('aceify_social_feed_widget_handle');
+$tw_consumer_key = get_option('aceify_social_feed_widget_twitter_consumer_key');
+$tw_consumer_secret = get_option('aceify_social_feed_widget_twitter_consumer_secret');
+$tw_oauth_token = get_option('aceify_social_feed_widget_twitter_oauth_token');
+$tw_oauth_secret = get_option('aceify_social_feed_widget_twitter_oauth_secret');
 
 if(!empty($tw_handle) && !empty($tw_consumer_key) && !empty($tw_consumer_secret) && !empty($tw_oauth_token) && !empty($tw_oauth_secret)){
 
